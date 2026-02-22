@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Workshop in Honour of Sven-Bodo Scholz's 60th Birthday</title>
+  <!--link rel="stylesheet" href="styles.css" -->
+  <style>
+    body { 
+    font-family: system-ui, sans-serif;
+    max-width:720px;
+    margin:2rem auto;
+    padding:0 1rem;
+    }
+
+    label { display:block; margin:0.5rem 0; }
+    input[type="text"]{ width:100%; padding:0.4rem; }
+    button{ margin-top:0.5rem; padding:0.5rem 1rem; }
+    h1, h2, h3 {color: #2c3e50;}
+    .highlight {color: #e74c3c; font-weight: bold;}
+    .section {margin-bottom: 1.5rem;}
+    #interestForm { background:#f9f9f9; }
+    #participantName {
+      width: 50ch;        /* nominal visible width ~50 chars */
+      max-width: 100%;    /* responsive fallback */
+    }
+    a {color:#2980b9; text-decoration:none;}
+    a:hover {text-decoration:underline;}
+  </style>
+</head>
+<body>
+  <main>
+    <!--h1>Workshop in Honour of Sven-Bodo Scholz's 60th Birthday</h1>
+    <p>Date: April 13, 2026</p>
+    <p></p>
+
+    <section id="signup">
+      <h2>Register interest</h2>
+    </section-->
+
+    <h1>Sven‑Bodo Scholz – 60th Birthday Celebration</h1>
+
+    <div class="section info">
+      <p><strong>Sven‑Bodo Scholz</strong>, Professor of Computer Science at
+      Radboud University, Nijmegen, turned <span class="highlight">60</span>
+      in 2026.</p> <p>We are delighted to organize this
+      scientific meeting to honor his outstanding contributions to
+      <em>array languages, compilers, functional programming, and
+      high‑performance computing</em>. Over the past decades Prof. Scholz has
+      shaped the way we think about combining productivity and performance 
+      on heterogeneous computing systems, and his work continues to influence
+      both academia and industry.</p>
+    </div>
+
+    <h2>Event Details</h2>
+    <ul>
+        <li><strong>Dates:</strong> <span class="highlight">13th of April</span></li>
+        <li><strong>Location:</strong> Nijmegen, The Netherlands (Radboud
+          University campus) – exact venue to be announced shortly.</li>
+        <li><strong>Audience:</strong> Open to anyone interested in the topics
+          above and in celebrating Prof. Scholz’s career.</li>
+    </ul>
+
+    <h2>Participation</h2>
+    <ul>
+        <li>The meeting is <strong>free of charge</strong>.</li>
+        <li>An optional banquet will be held on the evening of
+          <strong>April 13th</strong>. Attendance at the banquet requires a
+        separate payment made directly to the restaurant.</li>
+        <li>Participants are responsible for arranging their own
+          travel and accommodation.</li>
+    </ul>
+
+    <h2>Program</h2>
+    <p>Will be announced shortly after we collect the number of speakers.</p>
+
+    <h2>Registration</h2>
+    <p>Please register using the form below.</p>
+
+    <form id="interestForm">
+      <label>
+        Name:
+        <input type="text" name="name" id="participantName" required>
+      </label>
+      <label>
+        I want to give a talk:
+        <input type="checkbox" name="give_talk" id="give_talk" >
+      </label>
+      <label>
+        I will participate the banquet:
+        <input type="checkbox" name="banquet" id="banquet" >
+      </label>
+
+      <button type="submit">Register</button>
+    </form>
+    <p id="status" role="status" aria-live="polite"></p>
+
+
+    <h2>Contact</h2>
+    <p>For any questions, please contact the organizing committee at <a
+      href="mailto:artjoms.sinakarovs@pm.me">artjoms.sinkarovs@pm.me</a>.
+    </p>
+
+    <footer> <p>We look forward to welcoming you to Nijmegen for a memorable
+      celebration of Sven‑Bodo Scholz’s remarkable career and to fostering new
+      collaborations inspired by his work.</p>
+    </footer>
+  </main>
+
+  <script>
+    // Replace FORM_ENDPOINT with your Formspree endpoint (or other backend URL)
+    const FORM_ENDPOINT = "https://formspree.io/f/mzdajaby";
+
+    document.getElementById('interestForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const giveTalk = document.getElementById('give_talk').checked ? "yes" : "no";
+      const joinBanquet = document.getElementById('banquet').checked ? "yes" : "no";
+      const status = document.getElementById('status');
+
+      status.textContent = "Sending…";
+      try {
+        const resp = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, give_talk: giveTalk, banquet: joinBanquet })
+        });
+        if (resp.ok) {
+          status.textContent = "Thanks — we've received your submission.";
+          document.getElementById('interestForm').reset();
+        } else {
+          status.textContent = "Submission failed. Try again later.";
+        }
+      } catch (err) {
+        status.textContent = "Network error — please try again.";
+      }
+    });
+  </script>
+</body>
+</html>
+
